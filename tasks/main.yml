@@ -1,4 +1,6 @@
 # file: roles/auth/tasks/main.yml
 
 - include: users.yml
+  when: users is defined
 - include: keys.yml
+  when: keys is defined
