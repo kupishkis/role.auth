@@ -1,6 +1,8 @@
 # file: roles/auth/tasks/main.yml
 
+- include: groups.yml
+  when: auth_groups is defined
 - include: users.yml
-  when: users is defined
+  when: auth_users is defined
 - include: keys.yml
-  when: keys is defined
+  when: auth_keys is defined

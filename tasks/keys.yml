@@ -2,4 +2,4 @@
 
 - name: Auth | SSH authorized key setup
   authorized_key: user={{ item.user }} key="{{ item.key }}"
-  with_items: $keys
+  with_items: auth_keys

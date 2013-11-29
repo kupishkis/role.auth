@@ -1,5 +1,14 @@
 # file: roles/auth/tasks/users.yml
 
-- name: Auth | Make sure the users are present
-  user: name={{ item.name }} uid={{ item.uid }} password={{ item.passwd }} shell={{ item.shell }} comment="{{ item.comment }}" groups={{ ",".join(item.groups) }} append={{ item.append }}
-  with_items: $users
+- name: make sure the users are present
+  user: >
+    name={{ item.name }}
+    {% if item.uid      is defined %} uid={{ item.uid }}                    {% endif %}
+    {% if item.pass     is defined %} password={{ item.pass }}              {% endif %}
+    {% if item.shell    is defined %} shell={{ item.shell }}                {% endif %}
+    {% if item.home     is defined %} home={{ item.home }}                  {% endif %}
+    {% if item.group    is defined %} group={{ item.group }}                {% endif %}
+    {% if item.groups   is defined %} groups={{ ','.join(item.groups) }}    {% endif %}
+    {% if item.append   is defined %} append={{ item.append }}              {% endif %}
+    {% if item.comment  is defined %} comment='{{ item.comment }}'          {% endif %}
+  with_items: auth_users
