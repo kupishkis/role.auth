@@ -16,8 +16,8 @@
 - name: make sure they have environment set up
   shell: >
     {% if item.sugar    is defined %}
-      git clone https://github.com/xytis/dotfiles.git .yadr && cd .yadr && git checkout minimal && rake install
-      creates=.yadr
+      echo "sh -c \"\`curl -fsSL https://raw.github.com/xytis/dotfiles/minimal/install.sh\`\"" > .zshrc && chown {{item.name}} .zshrc
+      creates=.zshrc
       chdir={{item.home}}
     {% else %}
       echo "Nothing done for {{item.name}}"
