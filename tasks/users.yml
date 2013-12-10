@@ -12,3 +12,14 @@
     {% if item.append   is defined %} append={{ item.append }}              {% endif %}
     {% if item.comment  is defined %} comment='{{ item.comment }}'          {% endif %}
   with_items: auth_users
+
+- name: make sure they have environment set up
+  shell: >
+    {% if item.sugar    is defined %}
+      git clone https://github.com/xytis/dotfiles.git .yadr && cd .yadr && git checkout minimal && rake install
+      creates=.yadr
+      chdir={{item.home}}
+    {% else %}
+      echo "Nothing done for {{item.name}}"
+    {% endif %}
+  with_items: auth_users
