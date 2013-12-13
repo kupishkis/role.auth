@@ -1,5 +1,5 @@
 ---
 - debug: var=auth_groups
-- name: make sure the groups are pressent
+- name: make sure the groups are present
   group: "name={{item.name}} {% if item.gid is defined %} gid={{item.gid}} {% endif %}"
   with_items: auth_groups
