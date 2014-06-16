@@ -16,7 +16,7 @@
 - name: make sure they have environment set up
   shell: >
     {% if item.sugar    is defined %}
-      echo "sh -c \"\`curl -fsSL https://raw.github.com/xytis/dotfiles/minimal/install.sh\`\"" > .zshrc && chown {{item.name}} .zshrc
+      echo "cd ~\nsh -c \"\`curl -fsSL https://raw.github.com/xytis/dotfiles/minimal/install.sh\`\"" > .zshrc && chown {{item.name}}:{{item.group}} .zshrc
       creates=.zshrc
       chdir={{item.home}}
     {% else %}
