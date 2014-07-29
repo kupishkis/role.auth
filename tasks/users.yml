@@ -2,23 +2,23 @@
 
 - name: make sure the users are present
   user: >
-    name={{ item.name }}
-    {% if item.uid      is defined %} uid={{ item.uid }}                    {% endif %}
-    {% if item.pass     is defined %} password={{ item.pass }}              {% endif %}
-    {% if item.shell    is defined %} shell={{ item.shell }}                {% endif %}
-    {% if item.home     is defined %} home={{ item.home }}                  {% endif %}
-    {% if item.group    is defined %} group={{ item.group }}                {% endif %}
-    {% if item.groups   is defined %} groups={{ ','.join(item.groups) }}    {% endif %}
-    {% if item.append   is defined %} append={{ item.append }}              {% endif %}
-    {% if item.comment  is defined %} comment='{{ item.comment }}'          {% endif %}
+    name="{{ item.name }}"
+    {% if item.uid      is defined %} uid="{{ item.uid }}"                    {% endif %}
+    {% if item.pass     is defined %} password="{{ item.pass }}"              {% endif %}
+    {% if item.shell    is defined %} shell="{{ item.shell }}"                {% endif %}
+    {% if item.home     is defined %} home="{{ item.home }}"                  {% endif %}
+    {% if item.group    is defined %} group="{{ item.group }}"                {% endif %}
+    {% if item.groups   is defined %} groups="{{ ','.join(item.groups) }}"    {% endif %}
+    {% if item.append   is defined %} append="{{ item.append }}"              {% endif %}
+    {% if item.comment  is defined %} comment="{{ item.comment }}"            {% endif %}
   with_items: auth_users
 
 - name: make sure they have environment set up
   shell: >
     {% if item.sugar    is defined %}
-      echo "cd ~\nsh -c \"\`curl -fsSL https://raw.github.com/xytis/dotfiles/minimal/install.sh\`\"" > .zshrc && chown {{item.name}}:{{item.group}} .zshrc
+      echo "cd ~\nsh -c \"\`curl -fsSL https://raw.github.com/xytis/dotfiles/minimal/install.sh\`\"" > .zshrc && chown "{{item.name}}":"{{item.group}}" .zshrc
       creates=.zshrc
-      chdir={{item.home}}
+      chdir="{{item.home}}"
     {% else %}
       echo "Nothing done for {{item.name}}"
     {% endif %}
